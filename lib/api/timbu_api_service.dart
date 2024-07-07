@@ -11,8 +11,10 @@ Future<Map<String, dynamic>> getProducts() async {
   try {
     final res = await http.get(
       Uri.parse(
-          '$_baseUrl/products?organization_id=$_organisationId&Appid=$_appId&Apikey=$_apiKey'),
+        '$_baseUrl/products?organization_id=$_organisationId&Appid=$_appId&Apikey=$_apiKey',
+      ),
     );
+
     final data = jsonDecode(res.body);
     if (res.statusCode != 200) {
       throw 'An unexpected error occurred';
