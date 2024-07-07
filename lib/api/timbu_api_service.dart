@@ -1,45 +1,24 @@
-import 'package:dio/dio.dart';
-import 'package:timbu_app/models/product_model.dart';
+import 'dart:convert';
 
-class TimbuApiService {
-  final String _baseUrl = 'https://api.timbu.cloud';
-  final String _organizationId =
-      'YOUR_ORGANIZATION_ID'; // Replace with your Timbu organization ID
-  final String _appId = 'YOUR_APP_ID'; // Replace with your Timbu App ID
-  final String _apiKey = 'YOUR_API_KEY'; // Replace with your Timbu API key
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 
-  Future<List<ProductModel>> getProducts() async {
-    final dio = Dio();
-    final queryParams = {
-      'organization_id': _organizationId,
-      'Appid': _appId,
-      'Apikey': _apiKey,
-    };
-
-    try {
-      final response =
-          await dio.get('$_baseUrl/products', queryParameters: queryParams);
-      if (response.statusCode == 200) {
-        final data = response.data;
-        if (data is List) {
-          // Check if response is a list of products
-          return data.map((product) => ProductModel.fromJson(product)).toList();
-        } else if (data is Map) {
-          // Check if response is a single product object
-          return [];
-          // [
-          //   ProductModel.fromJson(data)
-          // ]
-          // Wrap in a list for consistency
-        } else {
-          throw Exception('Unexpected response format from Timbu API');
-        }
-      } else {
-        throw Exception(
-            'Failed to get products (Status Code: ${response.statusCode})');
-      }
-    } on DioError catch (error) {
-      throw Exception('Error during API request: ${error.message}');
+String _apiKey = dotenv.env['API_KEY']!;
+String _baseUrl = dotenv.env['BASE_URL']!;
+String _organisationId = dotenv.env['ORGANISATION_ID']!;
+String _appId = dotenv.env['APP_ID']!;
+Future<Map<String, dynamic>> getProducts() async {
+  try {
+    final res = await http.get(
+      Uri.parse(
+          '$_baseUrl/products?organization_id=$_organisationId&Appid=$_appId&Apikey=$_apiKey'),
+    );
+    final data = jsonDecode(res.body);
+    if (res.statusCode != 200) {
+      throw 'An unexpected error occurred';
     }
+    return data;
+  } catch (e) {
+    throw e.toString();
   }
 }

@@ -1,7 +1,5 @@
-import 'dart:convert';
-import 'package:flutter/widgets.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:timbu_app/api/timbu_api_service.dart';
 
 class ProductListScreen extends StatefulWidget {
   const ProductListScreen({super.key});
@@ -11,23 +9,6 @@ class ProductListScreen extends StatefulWidget {
 }
 
 class _ProductListScreenState extends State<ProductListScreen> {
-  // late Future<Map<String, dynamic>> products = getProducts();
-  Future<Map<String, dynamic>> getProducts() async {
-    try {
-      final res = await http.get(
-        Uri.parse(
-            'https://api.timbu.cloud/products?organization_id=e7907185a326465da7baf7277f8ccb0d&Appid=AHPSMLGANOCDOU9&Apikey=d38b1dacca8246958aaa2e2170d18bc620240706203235646957'),
-      );
-      final data = jsonDecode(res.body);
-      if (res.statusCode != 200) {
-        throw 'An unexpected error occurred';
-      }
-      return data;
-    } catch (e) {
-      throw e.toString();
-    }
-  }
-
   @override
   void initState() {
     super.initState();
