@@ -122,7 +122,7 @@ class Item {
         id: json["id"],
         parentProductId: json["parent_product_id"],
         parent: json["parent"],
-        organizationId: organizationIdValues.map[json["organization_id"]] ?? '',
+        organizationId: organizationIdValues.map[json["organization_id"]]!,
         productImage: List<dynamic>.from(json["product_image"].map((x) => x)),
         categories: List<dynamic>.from(json["categories"].map((x) => x)),
         dateCreated: DateTime.parse(json["date_created"]),
