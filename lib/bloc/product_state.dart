@@ -14,11 +14,11 @@ final class ProductLoadingState extends ProductState {}
 final class ProductSuccessState extends ProductState {
   final ProductModel productModel;
 
-  ProductSuccessState({required this.productModel});
+  const ProductSuccessState({required this.productModel});
 }
 
 final class ProductErrorState extends ProductState {
   final String error;
 
-  ProductErrorState({required this.error});
+  const ProductErrorState({required this.error});
 }

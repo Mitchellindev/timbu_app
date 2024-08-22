@@ -58,7 +58,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                 style: TextStyle(color: Colors.red),
                               ),
                         trailing: Text(
-                          '₦${product.currentPrice[index].ngn[0].toString()}',
+                          '₦${product.currentPrice[0].ngn[0].floor().toString()}',
                         ),
                       );
                     },

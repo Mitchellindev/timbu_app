@@ -51,7 +51,7 @@ class ProductModel {
 
 class Item {
   String name;
-  Description? description;
+  // Description? description;
   String uniqueId;
   String urlSlug;
   bool isAvailable;
@@ -63,16 +63,16 @@ class Item {
   String id;
   dynamic parentProductId;
   dynamic parent;
-  OrganizationId organizationId;
+  // OrganizationId organizationId;
   List<dynamic> productImage;
   List<dynamic> categories;
   DateTime dateCreated;
   DateTime lastUpdated;
-  UserId userId;
+  // UserId userId;
   List<Photo> photos;
   List<CurrentPrice> currentPrice;
   bool isDeleted;
-  int availableQuantity;
+  double availableQuantity;
   dynamic sellingPrice;
   dynamic discountedPrice;
   dynamic buyingPrice;
@@ -80,7 +80,7 @@ class Item {
 
   Item({
     required this.name,
-    required this.description,
+    // required this.description,
     required this.uniqueId,
     required this.urlSlug,
     required this.isAvailable,
@@ -92,12 +92,12 @@ class Item {
     required this.id,
     required this.parentProductId,
     required this.parent,
-    required this.organizationId,
+    // required this.organizationId,
     required this.productImage,
     required this.categories,
     required this.dateCreated,
     required this.lastUpdated,
-    required this.userId,
+    // required this.userId,
     required this.photos,
     required this.currentPrice,
     required this.isDeleted,
@@ -110,7 +110,7 @@ class Item {
 
   factory Item.fromJson(Map<String, dynamic> json) => Item(
         name: json["name"],
-        description: descriptionValues.map[json["description"]]!,
+        // description: descriptionValues.map[json["description"]]!,
         uniqueId: json["unique_id"],
         urlSlug: json["url_slug"],
         isAvailable: json["is_available"],
@@ -122,12 +122,12 @@ class Item {
         id: json["id"],
         parentProductId: json["parent_product_id"],
         parent: json["parent"],
-        organizationId: organizationIdValues.map[json["organization_id"]]!,
+        // organizationId: organizationIdValues.map[json["organization_id"]]!,
         productImage: List<dynamic>.from(json["product_image"].map((x) => x)),
         categories: List<dynamic>.from(json["categories"].map((x) => x)),
         dateCreated: DateTime.parse(json["date_created"]),
         lastUpdated: DateTime.parse(json["last_updated"]),
-        userId: userIdValues.map[json["user_id"]]!,
+        // userId: userIdValues.map[json["user_id"]]!,
         photos: List<Photo>.from(json["photos"].map((x) => Photo.fromJson(x))),
         currentPrice: List<CurrentPrice>.from(
             json["current_price"].map((x) => CurrentPrice.fromJson(x))),
@@ -141,7 +141,7 @@ class Item {
 
   Map<String, dynamic> toJson() => {
         "name": name,
-        "description": descriptionValues.reverse[description],
+        // "description": descriptionValues.reverse[description],
         "unique_id": uniqueId,
         "url_slug": urlSlug,
         "is_available": isAvailable,
@@ -153,12 +153,12 @@ class Item {
         "id": id,
         "parent_product_id": parentProductId,
         "parent": parent,
-        "organization_id": organizationIdValues.reverse[organizationId],
+        // "organization_id": organizationIdValues.reverse[organizationId],
         "product_image": List<dynamic>.from(productImage.map((x) => x)),
         "categories": List<dynamic>.from(categories.map((x) => x)),
         "date_created": dateCreated.toIso8601String(),
         "last_updated": lastUpdated.toIso8601String(),
-        "user_id": userIdValues.reverse[userId],
+        // "user_id": userIdValues.reverse[userId],
         "photos": List<dynamic>.from(photos.map((x) => x.toJson())),
         "current_price":
             List<dynamic>.from(currentPrice.map((x) => x.toJson())),
@@ -187,21 +187,21 @@ class CurrentPrice {
       };
 }
 
-enum Description { NULL }
+// enum Description { NULL }
 
-final descriptionValues = EnumValues({"null": Description.NULL});
+// final descriptionValues = EnumValues({"null": Description.NULL});
 
-enum OrganizationId { E7907185_A326465_DA7_BAF7277_F8_CCB0_D }
+// enum OrganizationId { E7907185_A326465_DA7_BAF7277_F8_CCB0_D }
 
-final organizationIdValues = EnumValues({
-  "e7907185a326465da7baf7277f8ccb0d":
-      OrganizationId.E7907185_A326465_DA7_BAF7277_F8_CCB0_D
-});
+// final organizationIdValues = EnumValues({
+//   "e7907185a326465da7baf7277f8ccb0d":
+//       OrganizationId.E7907185_A326465_DA7_BAF7277_F8_CCB0_D
+// });
 
 class Photo {
-  ModelName modelName;
+  // ModelName modelName;
   String modelId;
-  OrganizationId organizationId;
+  // OrganizationId organizationId;
   String filename;
   String url;
   bool isFeatured;
@@ -211,9 +211,9 @@ class Photo {
   int position;
 
   Photo({
-    required this.modelName,
+    // required this.modelName,
     required this.modelId,
-    required this.organizationId,
+    // required this.organizationId,
     required this.filename,
     required this.url,
     required this.isFeatured,
@@ -224,9 +224,9 @@ class Photo {
   });
 
   factory Photo.fromJson(Map<String, dynamic> json) => Photo(
-        modelName: modelNameValues.map[json["model_name"]]!,
+        // modelName: modelNameValues.map[json["model_name"]]!,
         modelId: json["model_id"],
-        organizationId: organizationIdValues.map[json["organization_id"]]!,
+        // organizationId: organizationIdValues.map[json["organization_id"]]!,
         filename: json["filename"],
         url: json["url"],
         isFeatured: json["is_featured"],
@@ -237,9 +237,9 @@ class Photo {
       );
 
   Map<String, dynamic> toJson() => {
-        "model_name": modelNameValues.reverse[modelName],
+        // "model_name": modelNameValues.reverse[modelName],
         "model_id": modelId,
-        "organization_id": organizationIdValues.reverse[organizationId],
+        // "organization_id": organizationIdValues.reverse[organizationId],
         "filename": filename,
         "url": url,
         "is_featured": isFeatured,
@@ -250,25 +250,25 @@ class Photo {
       };
 }
 
-enum ModelName { PRODUCTS }
+// enum ModelName { PRODUCTS }
 
-final modelNameValues = EnumValues({"products": ModelName.PRODUCTS});
+// final modelNameValues = EnumValues({"products": ModelName.PRODUCTS});
 
-enum UserId { THE_220_EF4_D896_B94_FE183_A38_F42648172_FC }
+// enum UserId { THE_220_EF4_D896_B94_FE183_A38_F42648172_FC }
 
-final userIdValues = EnumValues({
-  "220ef4d896b94fe183a38f42648172fc":
-      UserId.THE_220_EF4_D896_B94_FE183_A38_F42648172_FC
-});
+// final userIdValues = EnumValues({
+//   "220ef4d896b94fe183a38f42648172fc":
+//       UserId.THE_220_EF4_D896_B94_FE183_A38_F42648172_FC
+// });
 
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
+// class EnumValues<T> {
+//   Map<String, T> map;
+//   late Map<T, String> reverseMap;
 
-  EnumValues(this.map);
+//   EnumValues(this.map);
 
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
-}
+//   Map<T, String> get reverse {
+//     reverseMap = map.map((k, v) => MapEntry(v, k));
+//     return reverseMap;
+//   }
+// }
