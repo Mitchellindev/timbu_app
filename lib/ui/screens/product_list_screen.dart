@@ -47,7 +47,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     itemBuilder: (context, index) {
                       final product = productList[index];
                       return ListTile(
-                        title: Text(product.name),
+                        title: Text(product.name ?? ""),
                         subtitle: product.isAvailable == true
                             ? const Text(
                                 'Available',
