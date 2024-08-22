@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:timbu_app/api/timbu_api_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timbu_app/bloc/product_bloc.dart';
+import 'package:timbu_app/data/models/product_model.dart';
 
 class ProductListScreen extends StatefulWidget {
   const ProductListScreen({super.key});
@@ -11,6 +13,7 @@ class ProductListScreen extends StatefulWidget {
 class _ProductListScreenState extends State<ProductListScreen> {
   @override
   void initState() {
+    context.read<ProductBloc>().add(LoadProductEvent());
     super.initState();
   }
 
@@ -19,46 +22,52 @@ class _ProductListScreenState extends State<ProductListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Timbu Products'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              context.read<ProductBloc>().add(LoadProductEvent());
+            },
+          )
+        ],
       ),
-      body: FutureBuilder(
-        future: getProducts(),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+      body: BlocBuilder<ProductBloc, ProductState>(
+        builder: (context, state) {
+          if (state is ProductLoadingState) {
             return const Center(child: CircularProgressIndicator.adaptive());
           }
-          if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
+          if (state is ProductErrorState) {
+            return Text(state.error);
           }
-          final data = snapshot.data!;
-
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    final product = data['items'][index];
-                    return ListTile(
-                      title: Text(product['name']),
-                      subtitle: product['is_available'] == true
-                          ? const Text(
-                              'Available',
-                              style: TextStyle(color: Colors.green),
-                            )
-                          : const Text(
-                              'Not available',
-                              style: TextStyle(color: Colors.red),
-                            ),
-                      trailing: Text(
-                        '₦${product['current_price'][0]['NGN'][0].toStringAsFixed(2)}',
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          );
+          if (state is ProductSuccessState) {
+            List<Item> productList = state.productModel.items;
+            return productList.isNotEmpty
+                ? ListView.builder(
+                    itemCount: productList.length,
+                    itemBuilder: (context, index) {
+                      final product = productList[index];
+                      return ListTile(
+                        title: Text(product.name),
+                        subtitle: product.isAvailable == true
+                            ? const Text(
+                                'Available',
+                                style: TextStyle(color: Colors.green),
+                              )
+                            : const Text(
+                                'Not available',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                        trailing: Text(
+                          '₦${product.currentPrice[index].ngn[0].toString()}',
+                        ),
+                      );
+                    },
+                  )
+                : const Center(
+                    child: Text('No data found'),
+                  );
+          }
+          return const SizedBox();
         },
       ),
     );
